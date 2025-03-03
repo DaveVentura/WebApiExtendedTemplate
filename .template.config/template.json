@@ -1,0 +1,311 @@
+{
+    "$schema": "https://json.schemastore.org/template",
+    "author": "Dave Ventura",
+    "name": "Web API Extended Template",
+    "identity": "DaveVentura.WebApiExtendedTemplate",
+    "shortName": "xtwebapi",
+    "description": "This is an awesome extended and flexible .NET Api Template with a lot of preconfigured tools.",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "DaveVentura.WebApiExtendedTemplate",
+    "preferNameDirectory": true,
+    "classifications": [
+        "Web",
+        "API",
+        "C#"
+    ],
+    "symbols": {
+        "sqlType": {
+            "type": "parameter",
+            "datatype": "choice",
+            "defaultValue": "InMemory",
+            "description": "Choose a sql type (or none).",
+            "choices": [
+                {
+                    "choice": "SqlServer",
+                    "description": "SQL Server"
+                },
+                {
+                    "choice": "Postgres",
+                    "description": "PostgreSQL"
+                },
+                {
+                    "choice": "InMemory",
+                    "description": "in-Memory-database"
+                },
+                {
+                    "choice": "none",
+                    "description": "no SQL Database (not NoSQL, it means there is none)"
+                }
+            ]
+        },
+        "useMongo": {
+            "type": "parameter",
+            "datatype": "bool",
+            "description": "Use MongoDb"
+        },
+        "useAzureTable": {
+            "type": "parameter",
+            "datatype": "bool",
+            "description": "Use Azure Table"
+        },
+        "endpoints": {
+            "type": "parameter",
+            "datatype": "choice",
+            "defaultValue": "controller",
+            "description": "Choose which kind of endpoints should be used.",
+            "choices": [
+                {
+                    "choice": "controller",
+                    "description": "Controller-basierte Endpoints"
+                },
+                {
+                    "choice": "minimal",
+                    "description": "Minimal APIs"
+                }
+            ]
+        },
+        "useSwagger": {
+            "type": "parameter",
+            "datatype": "bool",
+            "description": "Use Swagger api docs",
+            "defaultValue": "true"
+        },
+        "useAzureAuth": {
+            "type": "parameter",
+            "datatype": "bool",
+            "description": "Use Swagger api docs"
+        },
+        "useFirebaseAuth": {
+            "type": "parameter",
+            "datatype": "bool",
+            "description": "Use Swagger api docs"
+        },
+        "UseSql": {
+            "type": "computed",
+            "value": "sqlType!=\"none\""
+        },
+        "UseInMemory": {
+            "type": "computed",
+            "value": "sqlType==\"InMemory\""
+        },
+        "UseSqlServer": {
+            "type": "computed",
+            "value": "sqlType==\"SqlServer\""
+        },
+        "UsePostgres": {
+            "type": "computed",
+            "value": "sqlType==\"Postgres\""
+        },
+        "UseAuth": {
+            "type": "computed",
+            "value": "useAzureAuth || useFirebaseAuth"
+        },
+        "UseItemGroupForTemplateDevelopment": {
+            "type": "computed",
+            "value": "no"
+        }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "sqlType == \"none\"",
+                    "exclude": [
+                        "Domain/Models/*",
+                        "Domain/Abstracts/ModelBase.cs",
+                        "Contracts/Requests/PersonRequest",
+                        "Contracts/Responses/PersonResponse",
+                        "Database/AppDbContext.cs",
+                        "Database/Migrations/*",
+                        "Services/Abstracts/EfCoreDataProvider.cs",
+                        "Services/PersonService.cs",
+                        "Controllers/PersonController.cs",
+                        "Startup/Configurators/InMemoryConfigurator.cs",
+                        "Startup/Configurators/MigrationConfigurator.cs",
+                        "Startup/Configurators/PostEndpointsConfigurator.cs",
+                        "Startup/Configurators/PersonEndpointsConfigurator.cs",
+                        "Startup/Registrators/InMemoryRegistrator.cs",
+                        "Startup/Registrators/PostgresRegistrator.cs",
+                        "Startup/Registrators/SqlServerRegistrator.cs"
+                    ]
+                },
+                {
+                    "condition": "sqlType == \"SqlServer\"",
+                    "exclude": [
+                        "Startup/Registrators/InMemoryRegistrator.cs",
+                        "Startup/Registrators/PostgresRegistrator.cs",
+                        "Startup/Configurators/InMemoryConfigurator.cs"
+                    ]
+                },
+                {
+                    "condition": "sqlType == \"Postgres\"",
+                    "exclude": [
+                        "Startup/Registrators/InMemoryRegistrator.cs",
+                        "Startup/Registrators/SqlServerRegistrator.cs",
+                        "Startup/Configurators/InMemoryConfigurator.cs"
+                    ]
+                },
+                {
+                    "condition": "sqlType == \"InMemory\"",
+                    "exclude": [
+                        "Database/Migrations/*",
+                        "Startup/Registrators/PostgresRegistrator.cs",
+                        "Startup/Registrators/SqlServerRegistrator.cs",
+                        "Startup/Configurators/MigrationConfigurator.cs"
+                    ]
+                },
+                {
+                    "condition": "!useMongo",
+                    "exclude": [
+                        "Domain/Documents/*",
+                        "Domain/Abstracts/MongoDocumentBase.cs",
+                        "Contracts/Requests/PostRequest.cs",
+                        "Contracts/Responses/PostResponse.cs",
+                        "Services/Abstracts/MongoDataProvider.cs",
+                        "Services/PostService.cs",
+                        "Controllers/PostController.cs",
+                        "Startup/Registrators/MongoRegistrator.cs",
+                        "Startup/Configurators/PostEndpointsConfigurator.cs"
+                    ]
+                },
+                {
+                    "condition": "!useMongo && !UseAzureSql && !UsePostgres",
+                    "exclude": [
+                        "Docker/*"
+                    ]
+                },
+                {
+                    "condition": "endpoints == \"controller\"",
+                    "exclude": [
+                        "Startup/Configurators/PostEndpointsConfigurator.cs",
+                        "Startup/Configurators/PersonEndpointsConfigurator.cs",
+                        "Startup/Configurators/MinimalApiConfigurator.cs",
+                        "Middlewares/ValidationMiddleware.cs"
+                    ]
+                },
+                {
+                    "condition": "endpoints == \"minimal\"",
+                    "exclude": [
+                        "Startup/Configurators/ControllerConfigurator.cs",
+                        "Startup/Registrators/ControllerRegistrator.cs",
+                        "Middlewares/ValidationFilter.cs",
+                        "Controllers/PostController.cs",
+                        "Controllers/PersonController.cs"
+                    ]
+                },
+                {
+                    "condition": "!useAzureAuth && !useFirebaseAuth",
+                    "exclude": [
+                        "Startup/Configurators/AuthConfigurator.cs"
+                    ]
+                },
+                {
+                    "condition": "!useAzureAuth",
+                    "exclude": [
+                        "Startup/Registrators/AzureEntraIdRegistrator.cs"
+                    ]
+                },
+                {
+                    "condition": "!useFirebaseAuth",
+                    "exclude": []
+                },
+                {
+                    "condition": "!useSwagger",
+                    "exclude": [
+                        "Startup/Configurators/SwaggerConfigurator.cs",
+                        "Startup/Registrators/SwaggerRegistrator.cs"
+                    ]
+                },
+                {
+                    "condition": "UseItemGroupForTemplateDevelopment==\"no\"",
+                    "exclude": [
+                        "WebApiExtendedTemplate.nuspec"
+                    ]
+                }
+            ]
+        }
+    ],
+    "SpecialCustomOperations": {
+        "**/*.cs": {
+            "operations": [
+                {
+                    "type": "conditional",
+                    "configuration": {
+                        "actionableIf": [
+                            "//#if"
+                        ],
+                        "actionableElse": [
+                            "#else",
+                            "//#else"
+                        ],
+                        "actionableElseif": [
+                            "#elseif",
+                            "//#elseif"
+                        ],
+                        "endif": [
+                            "#endif",
+                            "//#endif"
+                        ],
+                        "trim": "true",
+                        "wholeLine": "true"
+                    }
+                }
+            ]
+        },
+        "**/*.yaml": {
+            "operations": [
+                {
+                    "type": "conditional",
+                    "configuration": {
+                        "actionableIf": [
+                            "##if"
+                        ],
+                        "actionableElse": [
+                            "#else",
+                            "##else"
+                        ],
+                        "actionableElseif": [
+                            "#elseif",
+                            "##elseif"
+                        ],
+                        "endif": [
+                            "#endif",
+                            "##endif"
+                        ],
+                        "trim": "true",
+                        "wholeLine": "true"
+                    }
+                }
+            ]
+        },
+        ".env.example": {
+            "operations": [
+                {
+                    "type": "conditional",
+                    "configuration": {
+                        "actionableIf": [
+                            "##if"
+                        ],
+                        "actionableElse": [
+                            "#else",
+                            "##else"
+                        ],
+                        "actionableElseif": [
+                            "#elseif",
+                            "##elseif"
+                        ],
+                        "endif": [
+                            "#endif",
+                            "##endif"
+                        ],
+                        "trim": "true",
+                        "wholeLine": "true"
+                    }
+                }
+            ]
+        }
+    }
+}

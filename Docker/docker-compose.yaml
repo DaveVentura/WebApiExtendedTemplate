@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  ##if(UsePostgres)
+  postgres:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=testuser
+      - POSTGRES_DB=test
+  ##endif
+  ##if(UseSqlServer)
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: azure-sql-edge
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_edge_data:/var/opt/mssql
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+  ##endif
+  ##if(useMongo)
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: veruecktemongo
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+##endif
+volumes:
+  ##if(UsePostgres)
+  postgres_data:
+  ##endif
+  ##if(UseSqlServer)
+  sql_edge_data:
+  ##endif
+  ##if(useMongo)
+  mongodb_data:
+    driver: local
+  ##endif

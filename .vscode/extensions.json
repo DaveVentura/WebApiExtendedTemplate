@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "kreativ-software.csharpextensions",
+        "gaoshan0621.csharp-format-usings",
+        "fudge.auto-using",
+        "formulahendry.dotnet-test-explorer"
+    ]
+}

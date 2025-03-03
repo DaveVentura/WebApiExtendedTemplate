@@ -1,0 +1,26 @@
+{
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "[yaml]": {
+    "editor.formatOnSave": true
+  },
+  "csharp.showOmnisharpLogOnError": true,
+  "csharpFormatUsings.splitGroups": false,
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "omnisharp.analyzeOpenDocumentsOnly": false,
+  "omnisharp.autoStart": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.loggingLevel": "information",
+  "omnisharp.useEditorFormattingSettings": true,
+  "omnisharp.useModernNet": true,
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "dotnet.formatting.organizeImportsOnFormat": true
+}
