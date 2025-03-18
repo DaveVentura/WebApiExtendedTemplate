@@ -1,6 +1,6 @@
-using DaveVentura.WebApiExtendedTemplate.Domain.Abstracts;
+using WebApiExtendedTemplate.Domain.Abstracts;
 
-namespace DaveVentura.WebApiExtendedTemplate.Domain.Documents {
+namespace WebApiExtendedTemplate.Domain.Documents {
     public class Post : MongoDocumentBase {
 
         public required string Title { get; set; }

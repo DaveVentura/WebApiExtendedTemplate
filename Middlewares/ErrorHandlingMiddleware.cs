@@ -1,7 +1,10 @@
-﻿using DaveVentura.WebApiExtendedTemplate.Contracts.Responses;
-using DaveVentura.WebApiExtendedTemplate.Exceptions;
+﻿//#if(useAzureTable)
+using Azure;
+//#endif
+using WebApiExtendedTemplate.Contracts.Responses;
+using WebApiExtendedTemplate.Exceptions;
 
-namespace Test.Middlewares {
+namespace WebApiExtendedTemplate.Middlewares {
     public class ErrorHandlingMiddleware {
         private readonly RequestDelegate _next;
 
@@ -43,14 +46,11 @@ namespace Test.Middlewares {
             FormatException => StatusCodes.Status412PreconditionFailed,
             NotImplementedException => StatusCodes.Status501NotImplemented,
             TimeoutException => StatusCodes.Status504GatewayTimeout,
+            //#if(useAzureTable)
+            RequestFailedException rfex => rfex.Status,
+            //#endif
             _ => StatusCodes.Status500InternalServerError
         };
-    }
-
-    public static class ErrorHandlingMiddlewareExtensions {
-        public static IApplicationBuilder UseErrorHandlingMiddleware(this IApplicationBuilder builder) {
-            return builder.UseMiddleware<ErrorHandlingMiddleware>();
-        }
     }
 }
 

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class MongoRegistrator : IRegistator {
         public void RegisterServices(WebApplicationBuilder builder) {
             builder.Services.AddSingleton<IMongoClient>(_ => {

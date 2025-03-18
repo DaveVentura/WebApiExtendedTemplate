@@ -1,4 +1,4 @@
-using DaveVentura.WebApiExtendedTemplate.Extensions;
+using WebApiExtendedTemplate.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.RegisterServicesInAssembly();

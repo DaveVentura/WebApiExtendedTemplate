@@ -1,9 +1,8 @@
-using DaveVentura.WebApiExtendedTemplate.Middlewares;
+using WebApiExtendedTemplate.Middlewares;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators
-{
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class ControllerRegistrator : IRegistator {
-        public void RegisterServices(WebApplicationBuilder builder) 
+        public void RegisterServices(WebApplicationBuilder builder)
         => builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>());
     }
 }

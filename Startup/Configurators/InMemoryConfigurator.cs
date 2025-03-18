@@ -1,6 +1,6 @@
-using DaveVentura.WebApiExtendedTemplate.Database;
+using WebApiExtendedTemplate.Database;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Configurators {
+namespace WebApiExtendedTemplate.Startup.Configurators {
     public class InMemoryConfigurator : IAppConfigurator {
         public int Order => 0;
 

@@ -1,17 +1,17 @@
-using DaveVentura.WebApiExtendedTemplate.Domain.Documents;
-using DaveVentura.WebApiExtendedTemplate.Services.Abstracts;
 using MongoDB.Driver;
 using System.Linq.Expressions;
+using WebApiExtendedTemplate.Domain.Documents;
+using WebApiExtendedTemplate.Services.DataProviders;
 
-namespace DaveVentura.WebApiExtendedTemplate.Services {
+namespace WebApiExtendedTemplate.Services {
     public class PostService : MongoDataProvider<Post> {
         public PostService(IMongoDatabase database) : base(database, "posts") { }
 
         public async Task<Post> GetPostByIdAsync(string id, CancellationToken cancellationToken)
             => await base.GetByIdAsync(id, cancellationToken);
 
-        public async Task<IEnumerable<Post>> GetPostsByPredicate(Expression<Func<Post, bool>> predicate, CancellationToken cancellationToken)
-        => await base.GetByPredicateAsync(predicate, cancellationToken);
+        public async Task<IEnumerable<Post>> GetPostsByPredicate(FilterDefinition<Post> filter, CancellationToken cancellationToken)
+        => await base.GetByFilterAsync(filter, cancellationToken);
 
         public async Task<IEnumerable<Post>> GetAllPostsAsync(CancellationToken cancellationToken)
             => await base.GetAllAsync(cancellationToken);

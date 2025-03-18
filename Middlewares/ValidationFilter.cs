@@ -1,8 +1,8 @@
-﻿using DaveVentura.WebApiExtendedTemplate.Contracts.Responses;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using WebApiExtendedTemplate.Contracts.Responses;
 
-namespace DaveVentura.WebApiExtendedTemplate.Middlewares {
+namespace WebApiExtendedTemplate.Middlewares {
     public class ValidationFilter : IAsyncActionFilter {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
             if (!context.ModelState.IsValid) {

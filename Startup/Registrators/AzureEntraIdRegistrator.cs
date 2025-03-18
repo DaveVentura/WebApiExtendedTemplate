@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class AzureEntraIdRegistrator : IRegistator {
         public void RegisterServices(WebApplicationBuilder builder) {
             string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID") ?? "";

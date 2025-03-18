@@ -1,8 +1,6 @@
-using DaveVentura.WebApiExtendedTemplate.Domain.Models;
-using DaveVentura.WebApiExtendedTemplate.Middlewares;
-using DaveVentura.WebApiExtendedTemplate.Services;
+using WebApiExtendedTemplate.Middlewares;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Configurators {
+namespace WebApiExtendedTemplate.Startup.Configurators {
     public class MinimalApiConfigurator : IAppConfigurator {
         public int Order => 5000;
 
@@ -10,7 +8,6 @@ namespace DaveVentura.WebApiExtendedTemplate.Startup.Configurators {
             app.UseValidationMiddleware();
 
             app.MapGet("/", () => "Hello World!");
-            app.MapGet("/api", () => "OK");
         }
     }
 }

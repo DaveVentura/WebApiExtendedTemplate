@@ -2,14 +2,14 @@
     "$schema": "https://json.schemastore.org/template",
     "author": "Dave Ventura",
     "name": "Web API Extended Template",
-    "identity": "DaveVentura.WebApiExtendedTemplate",
+    "identity": "WebApiExtendedTemplate",
     "shortName": "xtwebapi",
     "description": "This is an awesome extended and flexible .NET Api Template with a lot of preconfigured tools.",
     "tags": {
         "language": "C#",
         "type": "project"
     },
-    "sourceName": "DaveVentura.WebApiExtendedTemplate",
+    "sourceName": "WebApiExtendedTemplate",
     "preferNameDirectory": true,
     "classifications": [
         "Web",
@@ -30,6 +30,10 @@
                 {
                     "choice": "Postgres",
                     "description": "PostgreSQL"
+                },
+                {
+                    "choice": "MySql",
+                    "description": "MySQL (uses preview package (!))"
                 },
                 {
                     "choice": "InMemory",
@@ -99,6 +103,10 @@
             "type": "computed",
             "value": "sqlType==\"Postgres\""
         },
+        "UseMySql": {
+            "type": "computed",
+            "value": "sqlType==\"MySql\""
+        },
         "UseAuth": {
             "type": "computed",
             "value": "useAzureAuth || useFirebaseAuth"
@@ -129,7 +137,8 @@
                         "Startup/Configurators/PersonEndpointsConfigurator.cs",
                         "Startup/Registrators/InMemoryRegistrator.cs",
                         "Startup/Registrators/PostgresRegistrator.cs",
-                        "Startup/Registrators/SqlServerRegistrator.cs"
+                        "Startup/Registrators/SqlServerRegistrator.cs",
+                        "Startup/Registrators/MySqlRegistrator.cs"
                     ]
                 },
                 {
@@ -137,7 +146,8 @@
                     "exclude": [
                         "Startup/Registrators/InMemoryRegistrator.cs",
                         "Startup/Registrators/PostgresRegistrator.cs",
-                        "Startup/Configurators/InMemoryConfigurator.cs"
+                        "Startup/Configurators/InMemoryConfigurator.cs",
+                        "Startup/Registrators/MySqlRegistrator.cs"
                     ]
                 },
                 {
@@ -145,6 +155,16 @@
                     "exclude": [
                         "Startup/Registrators/InMemoryRegistrator.cs",
                         "Startup/Registrators/SqlServerRegistrator.cs",
+                        "Startup/Configurators/InMemoryConfigurator.cs",
+                        "Startup/Registrators/MySqlRegistrator.cs"
+                    ]
+                },
+                {
+                    "condition": "sqlType == \"MySql\"",
+                    "exclude": [
+                        "Startup/Registrators/InMemoryRegistrator.cs",
+                        "Startup/Registrators/SqlServerRegistrator.cs",
+                        "Startup/Registrators/PostgresRegistrator.cs",
                         "Startup/Configurators/InMemoryConfigurator.cs"
                     ]
                 },
@@ -154,7 +174,8 @@
                         "Database/Migrations/*",
                         "Startup/Registrators/PostgresRegistrator.cs",
                         "Startup/Registrators/SqlServerRegistrator.cs",
-                        "Startup/Configurators/MigrationConfigurator.cs"
+                        "Startup/Configurators/MigrationConfigurator.cs",
+                        "Startup/Registrators/MySqlRegistrator.cs"
                     ]
                 },
                 {
@@ -172,7 +193,21 @@
                     ]
                 },
                 {
-                    "condition": "!useMongo && !UseAzureSql && !UsePostgres",
+                    "condition": "!useAzureTable",
+                    "exclude": [
+                        "Domain/Entities/*",
+                        "Domain/Abstracts/TableEntityBase.cs",
+                        "Contracts/Requests/PublicationRequest.cs",
+                        "Contracts/Responses/PublicationResponse.cs",
+                        "Services/Abstracts/AzureTableDataProvider.cs",
+                        "Services/PublicationService.cs",
+                        "Controllers/PublicationController.cs",
+                        "Startup/Registrators/AzureTableRegistrator.cs",
+                        "Startup/Configurators/PublicationEndpointsConfigurator.cs"
+                    ]
+                },
+                {
+                    "condition": "!useMongo && !UseAzureSql && !UsePostgres && !UseMySql",
                     "exclude": [
                         "Docker/*"
                     ]
@@ -182,6 +217,7 @@
                     "exclude": [
                         "Startup/Configurators/PostEndpointsConfigurator.cs",
                         "Startup/Configurators/PersonEndpointsConfigurator.cs",
+                        "Startup/Configurators/PublicationEndpointsConfigurator.cs",
                         "Startup/Configurators/MinimalApiConfigurator.cs",
                         "Middlewares/ValidationMiddleware.cs"
                     ]
@@ -193,7 +229,9 @@
                         "Startup/Registrators/ControllerRegistrator.cs",
                         "Middlewares/ValidationFilter.cs",
                         "Controllers/PostController.cs",
-                        "Controllers/PersonController.cs"
+                        "Controllers/PersonController.cs",
+                        "Controllers/PublicationController.cs",
+                        "Controllers/CommonControllerBase.cs"
                     ]
                 },
                 {
@@ -220,9 +258,13 @@
                     ]
                 },
                 {
-                    "condition": "UseItemGroupForTemplateDevelopment==\"no\"",
+                    "condition": "UseItemGroupForTemplateDevelopment!=\"yes\"",
                     "exclude": [
-                        "WebApiExtendedTemplate.nuspec"
+                        "WebApiExtendedTemplate.nuspec",
+                        "*.nupkg",
+                        ".env",
+                        "bin/*",
+                        "obj/*"
                     ]
                 }
             ]

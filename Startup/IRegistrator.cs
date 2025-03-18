@@ -1,4 +1,4 @@
-namespace DaveVentura.WebApiExtendedTemplate.Startup {
+namespace WebApiExtendedTemplate.Startup {
     public interface IRegistator {
         void RegisterServices(WebApplicationBuilder builder);
     }

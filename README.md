@@ -1,5 +1,7 @@
 # Web API Extended Template
 
+## v0.1.0
+
 This is a flexible and extended .NET API template with a variety of pre-configured tools, designed to help you quickly spin up a scalable web API project. You can choose from different configurations like SQL Server, PostgreSQL, MongoDB, Swagger, and more.
 
 ## Prerequisites
@@ -35,10 +37,12 @@ When you run `dotnet new xtwebapi`, you can specify various options to customize
 
 ### `sqlType`
 
-Choose which type of SQL database to use:
+Choose which type of SQL database to use with Entity Framework Core:
 
 - `SqlServer` — Use SQL Server.
 - `Postgres` — Use PostgreSQL.
+- `MySQL` — Use MySql [(preview package)](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql/9.0.0-preview.1)
+
 - `InMemory` — Use an in-memory database.
 - `none` — No SQL database (will exclude database-related files).
 

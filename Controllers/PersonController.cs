@@ -1,23 +1,23 @@
 using AutoMapper;
-using DaveVentura.WebApiExtendedTemplate.Constants;
-using DaveVentura.WebApiExtendedTemplate.Contracts.Requests;
-using DaveVentura.WebApiExtendedTemplate.Contracts.Responses;
-using DaveVentura.WebApiExtendedTemplate.Domain.Models;
-using DaveVentura.WebApiExtendedTemplate.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApiExtendedTemplate.Common;
+using WebApiExtendedTemplate.Contracts.Requests;
+using WebApiExtendedTemplate.Contracts.Responses;
+using WebApiExtendedTemplate.Domain.Models;
+using WebApiExtendedTemplate.Services;
 
 
-namespace DaveVentura.WebApiExtendedTemplate.Controllers {
+namespace WebApiExtendedTemplate.Controllers {
     [ApiController]
     //#if(UseAuth)
     [Authorize]
     //#endif
     [Route(ApiRoutes.Persons.ROUTE)]
-    public class PersonController : CommonController {
+    public class PersonController : CommonControllerBase {
         private readonly PersonService _personService;
 
-        public PersonController(PersonService personService, IMapper mapper) : base(mapper) {
+        public PersonController(PersonService personService, UriService uriService, IMapper mapper) : base(uriService, mapper) {
             _personService = personService;
         }
 
@@ -25,7 +25,9 @@ namespace DaveVentura.WebApiExtendedTemplate.Controllers {
         public async Task<IActionResult> Create([FromBody] PersonRequest personRequest, CancellationToken cancellationToken) {
             var person = Mapper.Map<Person>(personRequest);
             await _personService.CreatePersonAsync(person, true, cancellationToken);
-            return base.Created($"/api/persons/{person.Id}", Mapper.Map<PersonResponse>(person));
+            return base.Created(
+                UriService.GetUri($"{ApiRoutes.Persons.ROUTE}/{person.Id}"),
+                Mapper.Map<PersonResponse>(person));
         }
 
         [HttpGet]
@@ -34,21 +36,21 @@ namespace DaveVentura.WebApiExtendedTemplate.Controllers {
             return base.Ok(Mapper.Map<IEnumerable<PersonResponse>>(persons));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet(ApiRoutes.ID_ROUTE_PARAMETER)]
         public async Task<IActionResult> Get(long id, CancellationToken cancellationToken) {
 
             var person = await _personService.GetPersonByIdAsync(id, cancellationToken);
             return base.Ok(Mapper.Map<PersonResponse>(person));
         }
 
-        [HttpPut("{id}")]
+        [HttpPut(ApiRoutes.ID_ROUTE_PARAMETER)]
         public async Task<IActionResult> Update(long id, [FromBody] PersonRequest personRequest, CancellationToken cancellationToken) {
             var person = Mapper.Map<Person>(personRequest);
             await _personService.UpdatePersonAsync(id, person, true, cancellationToken);
             return base.Ok(Mapper.Map<PersonResponse>(person));
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete(ApiRoutes.ID_ROUTE_PARAMETER)]
         public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken) {
             await _personService.DeletePersonAsync(id, true, cancellationToken);
             return base.Ok();

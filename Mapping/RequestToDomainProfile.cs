@@ -1,13 +1,16 @@
 using AutoMapper;
-using DaveVentura.WebApiExtendedTemplate.Contracts.Requests;
+using WebApiExtendedTemplate.Contracts.Requests;
 //#if(useMongo)
-using DaveVentura.WebApiExtendedTemplate.Domain.Documents;
+using WebApiExtendedTemplate.Domain.Documents;
+//#endif
+//#if(useAzureTable)
+using WebApiExtendedTemplate.Domain.Entities;
 //#endif
 //#if(UseSql)
-using DaveVentura.WebApiExtendedTemplate.Domain.Models;
+using WebApiExtendedTemplate.Domain.Models;
 //#endif
 
-namespace DaveVentura.WebApiExtendedTemplate.Mapping {
+namespace WebApiExtendedTemplate.Mapping {
     public class RequestToDomainProfile : Profile {
         public RequestToDomainProfile() {
             //#if(UseSql)
@@ -15,6 +18,9 @@ namespace DaveVentura.WebApiExtendedTemplate.Mapping {
             //#endif
             //#if(useMongo)
             CreateMap<PostRequest, Post>();
+            //#endif
+            //#if(useAzureTable)
+            CreateMap<PublicationRequest, Publication>();
             //#endif
         }
     }

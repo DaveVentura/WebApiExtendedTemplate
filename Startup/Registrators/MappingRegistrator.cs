@@ -1,6 +1,6 @@
-using DaveVentura.WebApiExtendedTemplate.Mapping;
+using WebApiExtendedTemplate.Mapping;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class MappingRegistrator : IRegistator {
         public void RegisterServices(WebApplicationBuilder builder) {
             builder.Services.AddAutoMapper(

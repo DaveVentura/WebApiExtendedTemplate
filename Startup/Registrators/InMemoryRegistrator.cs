@@ -1,7 +1,7 @@
-using DaveVentura.WebApiExtendedTemplate.Database;
 using Microsoft.EntityFrameworkCore;
+using WebApiExtendedTemplate.Database;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class InMemoryRegistrator : IRegistator {
         public void RegisterServices(WebApplicationBuilder builder) {
             builder.Services.AddDbContext<AppDbContext>(options =>

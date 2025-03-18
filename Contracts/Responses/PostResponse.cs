@@ -1,6 +1,6 @@
 using MongoDB.Bson;
 
-namespace DaveVentura.WebApiExtendedTemplate.Contracts.Responses {
+namespace WebApiExtendedTemplate.Contracts.Responses {
     public class PostResponse {
         public ObjectId Id;
         public required string Title { get; set; }

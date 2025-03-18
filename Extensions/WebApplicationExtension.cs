@@ -1,7 +1,8 @@
-using DaveVentura.WebApiExtendedTemplate.Startup;
 using System.Reflection;
+using WebApiExtendedTemplate.Middlewares;
+using WebApiExtendedTemplate.Startup;
 
-namespace DaveVentura.WebApiExtendedTemplate.Extensions {
+namespace WebApiExtendedTemplate.Extensions {
     public static class WebApplicationExtension {
         public static void RegisterServicesInAssembly(this WebApplicationBuilder builder) {
             var registrators = GetAllClasses<IRegistator>();
@@ -13,6 +14,10 @@ namespace DaveVentura.WebApiExtendedTemplate.Extensions {
             var configurators = GetAllConfiguratorInOrder();
             configurators.ForEach(configurator => configurator.ConfigureApp(app));
         }
+
+        public static void UseErrorHandlingMiddleware(this WebApplication app)
+        => app.UseMiddleware<ErrorHandlingMiddleware>();
+
 
         private static List<T> GetAllClasses<T>() {
             return Assembly.GetExecutingAssembly().GetTypes()

@@ -1,12 +1,13 @@
 using AutoMapper;
-using DaveVentura.WebApiExtendedTemplate.Contracts.Responses;
+using WebApiExtendedTemplate.Contracts.Responses;
 //#if(useMongo)
-using DaveVentura.WebApiExtendedTemplate.Domain.Documents;
+using WebApiExtendedTemplate.Domain.Documents;
+using WebApiExtendedTemplate.Domain.Entities;
 //#endif
 //#if(UseSql)
-using DaveVentura.WebApiExtendedTemplate.Domain.Models;
+using WebApiExtendedTemplate.Domain.Models;
 //#endif
-namespace DaveVentura.WebApiExtendedTemplate.Mapping {
+namespace WebApiExtendedTemplate.Mapping {
     public class DomainToResponseProfile : Profile {
         public DomainToResponseProfile() {
             //#if(UseSql)
@@ -17,6 +18,13 @@ namespace DaveVentura.WebApiExtendedTemplate.Mapping {
             //#endif
             //#if(useMongo)
             CreateMap<Post, PostResponse>();
+            //#endif
+            //#if(useAzureTable)
+            CreateMap<Publication, PublicationResponse>()
+                .ForMember(dest => dest.Id, opt =>
+                    opt.MapFrom(src => src.RowKey))
+                .ForMember(dest => dest.PublicationType, opt =>
+                    opt.MapFrom(src => src.PartitionKey));
             //#endif
         }
         //#if(UseSql)

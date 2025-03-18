@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class SwaggerRegistrator : IRegistator {
         public void RegisterServices(WebApplicationBuilder builder) {
             builder.Services.AddEndpointsApiExplorer();

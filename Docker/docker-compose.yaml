@@ -36,7 +36,33 @@ services:
     volumes:
       - mongodb_data:/data/db
     restart: always
-##endif
+  ##endif
+  ##if(UseMySql)
+  mysql:
+    image: mysql:8.0
+    container_name: my_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  ##endif
+  ##if(useAzureTable)
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: azurite
+    restart: always
+    ports:
+      - "10002:10002" # Table service
+    command: "azurite --loose --tableHost 0.0.0.0 --tablePort 10002 --location /workspace --debug /workspace/debug.log"
+    volumes:
+      - azurite_data:/workspace
+  ##endif
 volumes:
   ##if(UsePostgres)
   postgres_data:
@@ -47,4 +73,10 @@ volumes:
   ##if(useMongo)
   mongodb_data:
     driver: local
+  ##endif
+  ##if(UseMysql)
+  mysql_data:
+  ##endif
+  ##if(useAzureTable)
+  azurite_data:
   ##endif

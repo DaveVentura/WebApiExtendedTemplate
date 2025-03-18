@@ -1,17 +1,16 @@
-using DaveVentura.WebApiExtendedTemplate.Database;
-using DaveVentura.WebApiExtendedTemplate.Domain.Abstracts;
-using DaveVentura.WebApiExtendedTemplate.Exceptions;
 //#if(UseSqlServer)
 using Microsoft.Data.SqlClient;
 //#endif
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 //#if(UsePostgres)
 using Npgsql;
 //#endif
 using System.Linq.Expressions;
+using WebApiExtendedTemplate.Database;
+using WebApiExtendedTemplate.Domain.Abstracts;
+using WebApiExtendedTemplate.Exceptions;
 
-namespace DaveVentura.WebApiExtendedTemplate.Services.Abstracts {
+namespace WebApiExtendedTemplate.Services.DataProviders {
     public abstract class EfCoreDataProvider<TModel, TKey> where TModel : ModelBase<TKey> {
         private protected AppDbContext DbContext;
         private protected readonly DbSet<TModel> Set;

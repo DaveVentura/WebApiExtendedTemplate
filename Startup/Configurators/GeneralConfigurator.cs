@@ -1,13 +1,12 @@
-using DaveVentura.WebApiExtendedTemplate.Middlewares;
+using WebApiExtendedTemplate.Extensions;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Configurators
-{
+namespace WebApiExtendedTemplate.Startup.Configurators {
     public class GeneralConfigurator : IAppConfigurator {
         public int Order => 1;
 
-        public void ConfigureApp(WebApplication app){
+        public void ConfigureApp(WebApplication app) {
             app.UseErrorHandlingMiddleware();
-            app.UseHttpsRedirection();   
+            app.UseHttpsRedirection();
         }
     }
 }

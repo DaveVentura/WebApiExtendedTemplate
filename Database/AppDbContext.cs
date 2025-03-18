@@ -1,7 +1,7 @@
-using DaveVentura.WebApiExtendedTemplate.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApiExtendedTemplate.Domain.Models;
 
-namespace DaveVentura.WebApiExtendedTemplate.Database {
+namespace WebApiExtendedTemplate.Database {
     public class AppDbContext : DbContext {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

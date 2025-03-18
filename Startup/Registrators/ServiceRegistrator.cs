@@ -1,6 +1,6 @@
-using DaveVentura.WebApiExtendedTemplate.Services;
+using WebApiExtendedTemplate.Services;
 
-namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
+namespace WebApiExtendedTemplate.Startup.Registrators {
     public class ServiceRegistrator : IRegistator {
         public void RegisterServices(WebApplicationBuilder builder) {
             //#if(UseSql)
@@ -9,6 +9,17 @@ namespace DaveVentura.WebApiExtendedTemplate.Startup.Registrators {
             //#if(useMongo)
             builder.Services.AddScoped<PostService>();
             //#endif
+            //#if(useAzureTable)
+            builder.Services.AddScoped<PublicationService>();
+            //#endif
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSingleton(provider => {
+                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor?.HttpContext?.Request;
+                string absoluteUri = string.Concat(request?.Scheme ?? "http", "://", request?.Host.ToUriComponent(), "/");
+                return new UriService(absoluteUri);
+            });
         }
     }
 }

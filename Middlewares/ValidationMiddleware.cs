@@ -1,22 +1,17 @@
-using DaveVentura.WebApiExtendedTemplate.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using WebApiExtendedTemplate.Contracts.Responses;
 
-namespace DaveVentura.WebApiExtendedTemplate.Middlewares
-{
-    public class ValidationMiddleware
-    {
+namespace WebApiExtendedTemplate.Middlewares {
+    public class ValidationMiddleware {
         private readonly RequestDelegate _next;
 
-        public ValidationMiddleware(RequestDelegate next)
-        {
+        public ValidationMiddleware(RequestDelegate next) {
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
-        {
+        public async Task InvokeAsync(HttpContext context) {
             var endpoint = context.GetEndpoint();
-            if (endpoint == null)
-            {
+            if (endpoint == null) {
                 await _next(context);
                 return;
             }
@@ -30,15 +25,12 @@ namespace DaveVentura.WebApiExtendedTemplate.Middlewares
                 .Where(x => x.Value?.Errors.Count > 0)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage));
 
-            var errorResponse = new ErrorResponse
-            {
+            var errorResponse = new ErrorResponse {
                 Errors = []
             };
 
-            foreach (var error in errorsInModelState)
-            {
-                foreach (string? subError in error.Value ?? [])
-                {
+            foreach (var error in errorsInModelState) {
+                foreach (string? subError in error.Value ?? []) {
                     string errorMessage = $"Error in Field:{error.Key}: {subError}";
                     errorResponse.Errors.Add(errorMessage);
                 }
@@ -50,10 +42,8 @@ namespace DaveVentura.WebApiExtendedTemplate.Middlewares
         }
     }
 
-    public static class ValidationMiddlewareExtensions
-    {
-        public static IApplicationBuilder UseValidationMiddleware(this IApplicationBuilder builder)
-        {
+    public static class ValidationMiddlewareExtensions {
+        public static IApplicationBuilder UseValidationMiddleware(this IApplicationBuilder builder) {
             return builder.UseMiddleware<ValidationMiddleware>();
         }
     }

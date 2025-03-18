@@ -1,9 +1,9 @@
-using DaveVentura.WebApiExtendedTemplate.Database;
-using DaveVentura.WebApiExtendedTemplate.Domain.Models;
-using DaveVentura.WebApiExtendedTemplate.Services.Abstracts;
 using System.Linq.Expressions;
+using WebApiExtendedTemplate.Database;
+using WebApiExtendedTemplate.Domain.Models;
+using WebApiExtendedTemplate.Services.DataProviders;
 
-namespace DaveVentura.WebApiExtendedTemplate.Services {
+namespace WebApiExtendedTemplate.Services {
     public class PersonService : EfCoreDataProvider<Person, long> {
         public PersonService(AppDbContext dbContext) : base(dbContext) { }
 
