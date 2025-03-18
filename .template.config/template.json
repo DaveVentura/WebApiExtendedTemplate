@@ -258,14 +258,22 @@
                     ]
                 },
                 {
-                    "condition": "UseItemGroupForTemplateDevelopment!=\"yes\"",
                     "exclude": [
                         "WebApiExtendedTemplate.nuspec",
-                        "*.nupkg",
                         ".env",
-                        "bin/*",
-                        "obj/*"
+                        "README.md",
+                        "**/*.nupkg",
+                        "**/*.user",
+                        "**/bin/**",
+                        "**/obj/**",
+                        "**/.vs/**",
+                        "**/*.log"
                     ]
+                },
+                {
+                    "rename": {
+                        "README.template.md": "README.md"
+                    }
                 }
             ]
         }
