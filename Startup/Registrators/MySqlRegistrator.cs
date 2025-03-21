@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiExtendedTemplate.Database;
-using WebApiExtendedTemplate.Startup;
 
 namespace WebApiExtendedTemplate.Startup.Registrators {
     public class MySqlRegistrator : IRegistator {

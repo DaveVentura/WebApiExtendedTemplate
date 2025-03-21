@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace WebApiExtendedTemplate.Exceptions {
     public class ApiException : Exception {
         public override string Message { get; }

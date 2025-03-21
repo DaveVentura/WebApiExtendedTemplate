@@ -1,5 +1,4 @@
 using Azure.Data.Tables;
-using WebApiExtendedTemplate.Startup;
 
 namespace WebApiExtendedTemplate.Startup.Registrators {
     public class AzureTableRegistrator : IRegistator {

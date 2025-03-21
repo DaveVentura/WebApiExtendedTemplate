@@ -1,6 +1,10 @@
 namespace WebApiExtendedTemplate.Common {
     public class ApiRoutes {
         public const string ID_ROUTE_PARAMETER = "{id}";
+        public static class Info {
+            public const string INFO = "info";
+            public const string ROUTE = $"/api/{INFO}";
+        }
         //#if(UseSql)
         public static class Persons {
             public const string PERSONS = "persons";

@@ -231,7 +231,8 @@
                         "Controllers/PostController.cs",
                         "Controllers/PersonController.cs",
                         "Controllers/PublicationController.cs",
-                        "Controllers/CommonControllerBase.cs"
+                        "Controllers/CommonControllerBase.cs",
+                        "Controllers/InfoController.cs"
                     ]
                 },
                 {
@@ -267,7 +268,8 @@
                         "**/bin/**",
                         "**/obj/**",
                         "**/.vs/**",
-                        "**/*.log"
+                        "**/*.log",
+                        "**/.git/**"
                     ]
                 },
                 {

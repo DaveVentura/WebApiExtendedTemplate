@@ -1,15 +1,20 @@
 ﻿//#if(useAzureTable)
 using Azure;
 //#endif
+using System.Text.Json;
 using WebApiExtendedTemplate.Contracts.Responses;
 using WebApiExtendedTemplate.Exceptions;
 
 namespace WebApiExtendedTemplate.Middlewares {
     public class ErrorHandlingMiddleware {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly IWebHostEnvironment _env;
 
-        public ErrorHandlingMiddleware(RequestDelegate next) {
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger, IWebHostEnvironment env) {
             _next = next;
+            _logger = logger;
+            _env = env;
         }
 
         public async Task InvokeAsync(HttpContext context) {
@@ -20,21 +25,25 @@ namespace WebApiExtendedTemplate.Middlewares {
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception) {
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception) {
+            int statusCode = DetermineStatusCode(exception);
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = DetermineStatusCode(exception);
+            context.Response.StatusCode = statusCode;
 
-            List<string> errors = [];
-            errors.Add($"{(exception is ApiException ? "" : $"{exception.GetType()}:")}{exception.Message}");
-            if (exception.InnerException != null) {
-                errors.Add($"{exception.InnerException.GetType()}:{exception.InnerException.Message}");
-            }
+            string traceId = context.TraceIdentifier;
+            var errors = ExtractErrorMessages(exception);
 
             var errorResponse = new ErrorResponse {
-                Errors = errors
+                StatusCode = statusCode,
+                Message = exception.Message,
+                Errors = errors,
+                TraceId = traceId,
+                StackTrace = _env.IsDevelopment() ? exception.StackTrace : null
             };
 
-            return context.Response.WriteAsJsonAsync(errorResponse);
+            _logger.LogError(exception, "Error: {Message} | TraceId: {TraceId}", exception.Message, traceId);
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
         }
 
         private static int DetermineStatusCode(Exception ex) => ex switch {
@@ -51,6 +60,15 @@ namespace WebApiExtendedTemplate.Middlewares {
             //#endif
             _ => StatusCodes.Status500InternalServerError
         };
+
+        private static List<string> ExtractErrorMessages(Exception exception) {
+            var errors = new List<string> { $"{exception.GetType().Name}: {exception.Message}" };
+
+            if (exception.InnerException != null) {
+                errors.Add($"{exception.InnerException.GetType().Name}: {exception.InnerException.Message}");
+            }
+
+            return errors;
+        }
     }
 }
-

@@ -1,5 +1,4 @@
 using MongoDB.Driver;
-using System.Linq.Expressions;
 using WebApiExtendedTemplate.Domain.Documents;
 using WebApiExtendedTemplate.Services.DataProviders;
 

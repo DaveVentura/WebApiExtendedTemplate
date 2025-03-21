@@ -1,3 +1,5 @@
+using System.Reflection;
+using WebApiExtendedTemplate.Common;
 using WebApiExtendedTemplate.Middlewares;
 
 namespace WebApiExtendedTemplate.Startup.Configurators {
@@ -7,7 +9,10 @@ namespace WebApiExtendedTemplate.Startup.Configurators {
         public void ConfigureApp(WebApplication app) {
             app.UseValidationMiddleware();
 
-            app.MapGet("/", () => "Hello World!");
+            app.MapGet(ApiRoutes.Info.ROUTE, () => {
+                string version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0";
+                return Results.Ok(new { Version = version });
+            });
         }
     }
 }

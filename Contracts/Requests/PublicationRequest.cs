@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-
 namespace WebApiExtendedTemplate.Contracts.Requests {
     public class PublicationRequest {
         public required string Title { get; set; }
@@ -8,6 +5,13 @@ namespace WebApiExtendedTemplate.Contracts.Requests {
         public required int YearPublished { get; set; }
     }
 
-
+    public enum PublicationType {
+        Book,
+        Article,
+        Magazine,
+        ResearchPaper,
+        Thesis,
+        ConferencePaper
+    }
 
 }
