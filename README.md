@@ -1,6 +1,6 @@
 # Web API Extended Template
 
-## v0.1.0
+## v0.2.0
 
 This is a flexible and extended .NET API template with a variety of pre-configured tools, designed to help you quickly spin up a scalable web API project. You can choose from different configurations like SQL Server, PostgreSQL, MongoDB, Swagger, and more.
 
@@ -132,6 +132,5 @@ dotnet new uninstall WebApiExtendedTemplate
 
 ## Planned features
 
-- **Azure Table Storage**
-- **Message Queues** Auzure Service Bus and RabbitMQ
+- **Message Queues** Auzure Service Bus, Azure Storage Queue and RabbitMQ
 - **Object Stores** Azure Blob and Minio

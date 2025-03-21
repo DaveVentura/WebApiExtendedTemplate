@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
         <id>WebApiExtendedTemplate</id>
-        <version>0.0.2</version>
+        <version>0.2.0</version>
         <authors>DaveVentura</authors>
         <description>This is an awesome extended and flexible .NET Api Template with a lot of
             preconfigured tools.</description>
