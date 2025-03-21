@@ -249,7 +249,10 @@
                 },
                 {
                     "condition": "!useFirebaseAuth",
-                    "exclude": []
+                    "exclude": [
+                        "Startup/Registrators/FirebaseAuthRegistrator.cs",
+                        "firebase-service-account.json"
+                    ]
                 },
                 {
                     "condition": "!useSwagger",

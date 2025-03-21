@@ -14,8 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"
-      Version="9.0.2"
-    />
+      Version="9.0.2" />
     <PackageReference Include="AutoMapper" Version="14.0.0" />
   </ItemGroup>
 
@@ -63,11 +62,21 @@
 
   <ItemGroup Condition="'$(useAzureAuth)' == true">
     <PackageReference Include="Microsoft.Identity.Web" Version="3.7.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(useFirebaseAuth)' == true">
+    <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
+    <None Update="firebase-service-account.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseAuth)' == true">
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(UseItemGroupForTemplateDevelopment)' == ''">
-    <!-- This groups ensurs, that all packages are avaliable while developing -->
+    <!-- This groups ensurs, that all packages are avaliable while template developing -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
@@ -85,5 +94,6 @@
     <PackageReference Include="Microsoft.Identity.Web" Version="3.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.3.1" />
+    <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
   </ItemGroup>
 </Project>
