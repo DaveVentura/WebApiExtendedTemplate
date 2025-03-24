@@ -295,7 +295,5 @@ __pycache__/
 *.xsd.cs
 
 .DS_Store
-.env
 
-**/fixtures/*.output.diff.json
-**/fixtures/*.output.dbg.json
+.env
